@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Clientes')}"></head>
+<body>
+<header th:replace="~{fragmentos :: encabezado}"></header>
+
+<main class="contenedor">
+    <div th:replace="~{fragmentos :: mensajes}"></div>
+
+    <h1>Clientes</h1>
+
+    <div class="herramientas">
+        <form class="barra" method="get" th:action="@{/clientes}">
+            <label for="q" class="oculto">Buscar</label>
+            <input id="q" type="search" name="q" th:value="${busqueda}"
+                   placeholder="Buscar por razón social">
+            <button type="submit" class="boton">Buscar</button>
+        </form>
+        <a class="boton boton-secundario" th:href="@{/clientes/nuevo}">+ Nuevo cliente</a>
+    </div>
+
+    <!-- Si la lista esta vacia se muestra un aviso -->
+    <p class="vacio" th:if="${#lists.isEmpty(clientes)}">No hay clientes para mostrar.</p>
+
+    <div class="tabla-contenedor" th:unless="${#lists.isEmpty(clientes)}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th><th>NIT</th><th>Razón social</th><th>Tipo</th>
+                <th>Correo</th><th>Estado</th><th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- th:each repite la fila por cada cliente; th:text escapa el texto (evita XSS) -->
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.id}">1</td>
+                <td th:text="${cliente.nit}">900123456-7</td>
+                <td th:text="${cliente.razonSocial}">Razón social</td>
+                <td th:text="${cliente.tipoPersona.descripcion}">Juridica</td>
+                <td th:text="${cliente.correo}">correo@ejemplo.com</td>
+                <td>
+                    <span class="etiqueta"
+                          th:classappend="${cliente.activo} ? 'etiqueta-activo' : 'etiqueta-inactivo'"
+                          th:text="${cliente.activo} ? 'Activo' : 'Inactivo'">Activo</span>
+                </td>
+                <td class="acciones">
+                    <a th:href="@{/clientes/{id}(id=${cliente.id})}">Ver</a>
+                    <a th:href="@{/clientes/{id}/editar(id=${cliente.id})}">Editar</a>
+                    <!-- Eliminar modifica datos: se hace con un formulario POST -->
+                    <form method="post" th:action="@{/clientes/{id}/eliminar(id=${cliente.id})}"
+                          onsubmit="return confirm('¿Eliminar este cliente?');">
+                        <button type="submit" class="enlace-peligro">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="total" th:unless="${#lists.isEmpty(clientes)}">
+        Total de clientes: <strong th:text="${#lists.size(clientes)}">0</strong>
+    </p>
+</main>
+
+<footer th:replace="~{fragmentos :: pie}"></footer>
+</body>
+</html>

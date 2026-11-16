@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Cliente')}"></head>
+<body>
+<header th:replace="~{fragmentos :: encabezado}"></header>
+
+<main class="contenedor">
+    <h1 th:text="${cliente.id == null} ? 'Nuevo cliente' : 'Editar cliente'">Cliente</h1>
+
+    <!-- th:object enlaza el formulario con el objeto Cliente; th:field enlaza cada campo -->
+    <form class="formulario" method="post" th:action="@{/clientes/guardar}" th:object="${cliente}">
+
+        <!-- El id solo tiene valor cuando se edita; si es nulo, el servicio hace un INSERT -->
+        <input type="hidden" th:field="*{id}">
+
+        <div class="campo">
+            <label for="nit">NIT *</label>
+            <input id="nit" type="text" maxlength="15" placeholder="Ej: 900123456-7" th:field="*{nit}">
+            <small class="error-campo" th:if="${#fields.hasErrors('nit')}" th:errors="*{nit}"></small>
+        </div>
+
+        <div class="campo">
+            <label for="razonSocial">Razón social *</label>
+            <input id="razonSocial" type="text" maxlength="150" th:field="*{razonSocial}">
+            <small class="error-campo" th:if="${#fields.hasErrors('razonSocial')}" th:errors="*{razonSocial}"></small>
+        </div>
+
+        <div class="campo">
+            <label for="tipoPersona">Tipo de persona *</label>
+            <select id="tipoPersona" th:field="*{tipoPersona}">
+                <option value="">Seleccione...</option>
+                <option th:each="tipo : ${tipos}" th:value="${tipo}" th:text="${tipo.descripcion}">Tipo</option>
+            </select>
+            <small class="error-campo" th:if="${#fields.hasErrors('tipoPersona')}" th:errors="*{tipoPersona}"></small>
+        </div>
+
+        <div class="campo">
+            <label for="correo">Correo electrónico *</label>
+            <input id="correo" type="text" maxlength="100" th:field="*{correo}">
+            <small class="error-campo" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
+        </div>
+
+        <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" type="text" maxlength="10" placeholder="Entre 7 y 10 dígitos" th:field="*{telefono}">
+            <small class="error-campo" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+        </div>
+
+        <div class="campo campo-casilla">
+            <input id="activo" type="checkbox" th:field="*{activo}">
+            <label for="activo">Cliente activo</label>
+        </div>
+
+        <div class="botones">
+            <button type="submit" class="boton"
+                    th:text="${cliente.id == null} ? 'Registrar' : 'Guardar cambios'">Guardar</button>
+            <a class="boton boton-secundario" th:href="@{/clientes}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragmentos :: pie}"></footer>
+</body>
+</html>

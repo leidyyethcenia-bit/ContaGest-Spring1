@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Inicio')}"></head>
+<body>
+<header th:replace="~{fragmentos :: encabezado}"></header>
+
+<main class="contenedor">
+    <section class="portada">
+        <h1>Gestión de clientes del despacho contable</h1>
+        <p>Aplicación desarrollada con <strong>Spring Boot</strong>, <strong>Spring MVC</strong>,
+           <strong>Thymeleaf</strong> y <strong>Spring Data JPA</strong>.</p>
+
+        <!-- Formulario con metodo GET: el texto buscado viaja en la URL (?q=...) -->
+        <form class="barra" method="get" th:action="@{/clientes}">
+            <label for="q" class="oculto">Buscar cliente</label>
+            <input id="q" type="search" name="q" placeholder="Buscar cliente por razón social">
+            <button type="submit" class="boton">Buscar</button>
+        </form>
+
+        <p>
+            <a class="boton" th:href="@{/clientes}">Ver clientes</a>
+            <a class="boton boton-secundario" th:href="@{/clientes/nuevo}">Registrar cliente</a>
+            <a class="boton boton-secundario" th:href="@{/api/clientes}">API REST (JSON)</a>
+        </p>
+    </section>
+</main>
+
+<footer th:replace="~{fragmentos :: pie}"></footer>
+</body>
+</html>

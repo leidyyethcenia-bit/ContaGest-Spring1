@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmentos reutilizables: cada pagina los incluye con th:replace -->
+<head th:fragment="cabecera(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' - ContaGest'">ContaGest</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header class="cabecera" th:fragment="encabezado">
+    <div class="contenedor cabecera-contenido">
+        <a class="marca" th:href="@{/}">ContaGest</a>
+        <nav>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/clientes}">Clientes</a>
+            <a th:href="@{/clientes/nuevo}">Nuevo cliente</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Mensajes de exito o error que envian los controladores -->
+<div th:fragment="mensajes">
+    <div class="alerta alerta-exito" role="alert" th:if="${exito}" th:text="${exito}"></div>
+    <div class="alerta alerta-error" role="alert" th:if="${error}" th:text="${error}"></div>
+</div>
+
+<footer class="pie" th:fragment="pie">
+    <div class="contenedor">
+        ContaGest - Software para despacho contable &middot; Construido con Spring Boot
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Error')}"></head>
+<body>
+<header th:replace="~{fragmentos :: encabezado}"></header>
+
+<main class="contenedor">
+    <h1 th:text="${status == 404} ? 'Página no encontrada' : 'Ocurrió un error'">Error</h1>
+    <p th:text="${status == 404} ? 'La dirección que intenta abrir no existe.' : 'No fue posible completar la operación. Intente de nuevo.'">
+        Mensaje
+    </p>
+    <p class="detalle-error">Código: <span th:text="${status}">500</span></p>
+    <p><a class="boton" th:href="@{/}">Volver al inicio</a></p>
+</main>
+
+<footer th:replace="~{fragmentos :: pie}"></footer>
+</body>
+</html>

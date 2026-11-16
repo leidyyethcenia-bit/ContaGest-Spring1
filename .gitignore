@@ -1,0 +1,13 @@
+# Compilados y datos locales
+target/
+data/
+*.class
+*.log
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+.settings/
+.classpath
+.project

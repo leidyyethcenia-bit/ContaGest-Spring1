@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Detalle del cliente')}"></head>
+<body>
+<header th:replace="~{fragmentos :: encabezado}"></header>
+
+<main class="contenedor">
+    <h1 th:text="${cliente.razonSocial}">Razón social</h1>
+
+    <dl class="detalle">
+        <dt>Id</dt><dd th:text="${cliente.id}">1</dd>
+        <dt>NIT</dt><dd th:text="${cliente.nit}">900123456-7</dd>
+        <dt>Tipo de persona</dt><dd th:text="${cliente.tipoPersona.descripcion}">Juridica</dd>
+        <dt>Correo</dt><dd th:text="${cliente.correo}">correo@ejemplo.com</dd>
+        <dt>Teléfono</dt><dd th:text="${cliente.telefono != null} ? ${cliente.telefono} : 'Sin teléfono'">3101234567</dd>
+        <dt>Estado</dt><dd th:text="${cliente.activo} ? 'Activo' : 'Inactivo'">Activo</dd>
+        <dt>Fecha de registro</dt><dd th:text="${cliente.fechaRegistro}">2026-01-01</dd>
+    </dl>
+
+    <p>
+        <a class="boton" th:href="@{/clientes/{id}/editar(id=${cliente.id})}">Editar</a>
+        <a class="boton boton-secundario" th:href="@{/clientes}">Volver al listado</a>
+    </p>
+</main>
+
+<footer th:replace="~{fragmentos :: pie}"></footer>
+</body>
+</html>
